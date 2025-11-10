@@ -2,11 +2,12 @@ import React, { useContext, useState } from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Context/AuthContext";
 import Loading from "../../Loading/Loading";
+import { useNavigate } from "react-router";
 
 const AddHabit = () => {
   const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
-
+const navigate=useNavigate()
   const handleAddHabit = (e) => {
     e.preventDefault();
   
@@ -44,6 +45,8 @@ const AddHabit = () => {
             icon: "success",
           });
           e.target.reset();
+          navigate('/myHabit')
+
         }
       })
       .catch(() => {
