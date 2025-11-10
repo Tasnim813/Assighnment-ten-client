@@ -12,7 +12,7 @@ import AuthProvider from './Context/AuthProvider.jsx'
 import { ToastContainer } from 'react-toastify'
 
 import AddHabit from './Page/AddHabit/AddHabit.jsx'
-import Myhabit from './Page/MyHabit/Myhabit.jsx'
+import Myhabit from './Page/MyHabit/MyHabit.jsx'
 import BrowsePublicHabit from './Page/BrowsePublicHabit/BrowsePublicHabit.jsx'
 import CartDetails from './Page/Feturecart/CartDetails.jsx'
 import PublicHabitDetails from './Page/PublicHabitCard/PublicHabitDetails.jsx'

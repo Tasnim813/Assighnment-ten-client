@@ -1,164 +1,159 @@
-import React, { useState, useContext } from "react";
-
-import { toast } from "react-toastify";
+import React, { useContext, useState } from "react";
+import Swal from "sweetalert2";
 import { AuthContext } from "../../Context/AuthContext";
-
-const categories = ["Morning", "Work", "Fitness", "Evening", "Study"];
+import Loading from "../../Loading/Loading";
 
 const AddHabit = () => {
   const { user } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState(categories[0]);
-  const [reminderTime, setReminderTime] = useState("");
-  const [image, setImage] = useState("");
-
-  const handleSubmit = async (e) => {
+  const handleAddHabit = (e) => {
     e.preventDefault();
+  
+      const  newHabit={
+        
+     title : e.target.title.value,
+     description : e.target.description.value,
+     category : e.target.category.value,
+     reminderTime : e.target.reminderTime.value,
+    image : e.target.image.value,
+    creatorEmail : user?.email,
+    creatorName : user?.displayName,
+    createdAt: new Date(),
+    isPublic: true
 
-    // Validation
-    if (!title || !description || !category || !reminderTime) {
-      toast.error("Please fill all required fields!");
-      return;
-    }
 
-    const habitData = {
-      title,
-      description,
-      category,
-      reminderTime,
-      image,
-      userName: user?.displayName,
-      userEmail: user?.email,
-      createdAt: new Date().toISOString(),
-      completionHistory: [],
-    };
-
-    try {
-      const res = await fetch("http://localhost:3000/health", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(habitData),
-      });
-
-      if (res.ok) {
-        toast.success("Habit added successfully!");
-        // Clear form
-        setTitle("");
-        setDescription("");
-        setCategory(categories[0]);
-        setReminderTime("");
-        setImage("");
-      } else {
-        toast.error("Failed to add habit.");
       }
-    } catch (err) {
-      toast.error(err.message);
-    }
+   
+    console.log(newHabit)
+
+    fetch('http://localhost:3000/habit', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(newHabit)
+    }).then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        setLoading(false);
+        if (data.insertedId) {
+          Swal.fire({
+            title: "Habit Added!",
+            text: "Your habit was successfully added.",
+            icon: "success",
+          });
+          e.target.reset();
+        }
+      })
+      .catch(() => {
+        ;
+        Swal.fire({
+          title: "Error!",
+          text: "Failed to add habit. Try again.",
+          icon: "error",
+        });
+      });
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100 p-4">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-lg space-y-5"
-      >
-        <h1 className="text-3xl font-bold text-purple-600 text-center mb-6">
-          Add New Habit
-        </h1>
+    <div className="max-w-3xl mx-auto bg-white shadow-md rounded-xl p-6 my-10">
+      <h2 className="text-2xl font-semibold text-center mb-6">
+        Add a New Habit
+      </h2>
 
+      <form onSubmit={handleAddHabit} className="space-y-4">
         {/* Habit Title */}
         <div>
-          <label className="block text-gray-700 mb-1">Habit Title</label>
+          <label className="block font-medium mb-1">Habit Title</label>
           <input
             type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="w-full border border-purple-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
-            placeholder="Enter habit title"
+            name="title"
             required
+            placeholder="Enter habit title"
+            className="w-full border px-3 py-2 rounded-md"
           />
         </div>
 
         {/* Description */}
         <div>
-          <label className="block text-gray-700 mb-1">Description</label>
+          <label className="block font-medium mb-1">Description</label>
           <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="w-full border border-purple-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
-            placeholder="Describe your habit"
+            name="description"
             required
+            placeholder="Describe your habit..."
+            className="w-full border px-3 py-2 rounded-md"
           ></textarea>
         </div>
 
         {/* Category */}
         <div>
-          <label className="block text-gray-700 mb-1">Category</label>
+          <label className="block font-medium mb-1">Category</label>
           <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="w-full border border-purple-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            name="category"
+            required
+            className="w-full border px-3 py-2 rounded-md"
           >
-            {categories.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
-            ))}
+            <option value="">Select Category</option>
+            <option value="Morning">Morning</option>
+            <option value="Work">Work</option>
+            <option value="Fitness">Fitness</option>
+            <option value="Evening">Evening</option>
+            <option value="Study">Study</option>
           </select>
         </div>
 
         {/* Reminder Time */}
         <div>
-          <label className="block text-gray-700 mb-1">Reminder Time</label>
+          <label className="block font-medium mb-1">Reminder Time</label>
           <input
             type="time"
-            value={reminderTime}
-            onChange={(e) => setReminderTime(e.target.value)}
-            className="w-full border border-purple-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            name="reminderTime"
             required
+            className="w-full border px-3 py-2 rounded-md"
           />
         </div>
 
         {/* Image URL */}
         <div>
-          <label className="block text-gray-700 mb-1">Image URL (Optional)</label>
+          <label className="block font-medium mb-1">
+            Image URL (optional)
+          </label>
           <input
             type="text"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-            className="w-full border border-purple-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
-            placeholder="Enter image URL"
+            name="image"
+            placeholder="https://example.com/habit.jpg"
+            className="w-full border px-3 py-2 rounded-md"
           />
         </div>
 
-        {/* User Name (Read-only) */}
-        <div>
-          <label className="block text-gray-700 mb-1">User Name</label>
-          <input
-            type="text"
-            value={user?.displayName || ""}
-            readOnly
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-100"
-          />
+        {/* User Info */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block font-medium mb-1">User Name</label>
+            <input
+              type="text"
+              readOnly
+              value={user?.displayName || ""}
+              className="w-full border px-3 py-2 rounded-md bg-gray-100"
+            />
+          </div>
+          <div>
+            <label className="block font-medium mb-1">User Email</label>
+            <input
+              type="email"
+              readOnly
+              value={user?.email || ""}
+              className="w-full border px-3 py-2 rounded-md bg-gray-100"
+            />
+          </div>
         </div>
 
-        {/* User Email (Read-only) */}
-        <div>
-          <label className="block text-gray-700 mb-1">User Email</label>
-          <input
-            type="email"
-            value={user?.email || ""}
-            readOnly
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-100"
-          />
-        </div>
-
-        {/* Submit Button */}
+        {/* Submit */}
         <button
           type="submit"
-          className="w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white py-2 rounded-lg hover:opacity-90 transition font-semibold"
+        
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md mt-4 font-semibold"
         >
           Add Habit
         </button>
