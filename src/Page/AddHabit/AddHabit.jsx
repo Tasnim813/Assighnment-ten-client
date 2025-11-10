@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Context/AuthContext";
-import Loading from "../../Loading/Loading";
+
 import { useNavigate } from "react-router";
 
 const AddHabit = () => {
@@ -58,6 +58,7 @@ const navigate=useNavigate()
         });
       });
   };
+  
 
   return (
     <div className="max-w-3xl mx-auto bg-white shadow-md rounded-xl p-6 my-10">
