@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../Context/AuthContext';
-import PublicHabitCard from '../PublicHabitCard/PublicHabitCard';
+
 import Habit from './Habit';
 
 const Myhabit = () => {
@@ -14,15 +14,13 @@ email}`)
   console.log(data)
   setModel(data)
 })
-  },[])
+  },[user])
   return (
     <div>
       {
         model.map(cart=><Habit cart={cart}></Habit> )
       }
-      {/* {
-        model.map(cart=><PublicHabitCard cart={cart}></PublicHabitCard>)
-      } */}
+     
         
     </div>
   );

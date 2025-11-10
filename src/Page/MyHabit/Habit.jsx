@@ -1,5 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link, useNavigate } from "react-router";
+import Swal from "sweetalert2";
 
 const Habit = ({ cart, onUpdate, onDelete, onMarkComplete }) => {
   const {
@@ -10,7 +12,46 @@ const Habit = ({ cart, onUpdate, onDelete, onMarkComplete }) => {
     createdAt,
     isPublic,
     image,
+    _id
   } = cart;
+  const navigate = useNavigate()
+
+  const handleDelete = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:3000/habit/${_id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+        })
+          .then((res) => res.json())
+          .then(result => {
+            console.log(result)
+            Swal.fire({
+              icon: "success",
+              title: "Habit Updated!",
+              text: "Your habit details have been successfully updated.",
+            });
+            navigate("/browsePublicHabit");
+          })
+
+          .catch(error => {
+            console.log(error)
+          })
+
+      }
+    });
+  }
 
   return (
     <motion.div
@@ -33,11 +74,10 @@ const Habit = ({ cart, onUpdate, onDelete, onMarkComplete }) => {
           <div className="flex justify-between items-center">
             <h2 className="text-2xl font-semibold text-gray-800">{title}</h2>
             <span
-              className={`text-xs px-3 py-1 rounded-full font-semibold ${
-                isPublic
+              className={`text-xs px-3 py-1 rounded-full font-semibold ${isPublic
                   ? "bg-green-100 text-green-700"
                   : "bg-gray-200 text-gray-700"
-              }`}
+                }`}
             >
               {isPublic ? "Public" : "Private"}
             </span>
@@ -65,20 +105,19 @@ const Habit = ({ cart, onUpdate, onDelete, onMarkComplete }) => {
 
           {/* Action Buttons */}
           <div className="flex flex-wrap gap-2 pt-3">
-            <button
-              onClick={() => onUpdate(cart)}
+            <Link to={`/update-habit/${_id}`}
               className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md text-sm shadow-sm transition duration-200"
             >
               ✏️ Update
-            </button>
+            </Link>
             <button
-              onClick={() => onDelete(cart)}
+              onClick={handleDelete}
               className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm shadow-sm transition duration-200"
             >
               🗑️ Delete
             </button>
             <button
-              onClick={() => onMarkComplete(cart)}
+              // onClick={() => onMarkComplete(cart)}
               className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md text-sm shadow-sm transition duration-200"
             >
               ✅ Mark Complete
