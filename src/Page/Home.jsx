@@ -1,9 +1,11 @@
 import React from "react";
-import HeroCarousel from "./Carosel/HeroCarousel";
+
 import Featurecart from "./Feturecart/Featurecart";
 import { useLoaderData } from "react-router";
 import { motion } from "framer-motion";
 import WhyBuildHabits from "./WhyBuildHabits/WhyBuildHabits";
+import Banner from "./Carosel/HeroCarousel";
+import HeroCarousel from "./Carosel/HeroCarousel";
 
 
 const containerVariants = {
@@ -19,7 +21,8 @@ const Home = () => {
     <div className="px-4 md:px-10 lg:px-20">
       
       {/* Hero Banner / Slider with Typewriter */}
-      <HeroCarousel />
+     <Banner></Banner>
+     {/* <HeroCarousel></HeroCarousel> */}
 
       {/* Featured Habits Section */}
       <motion.h2

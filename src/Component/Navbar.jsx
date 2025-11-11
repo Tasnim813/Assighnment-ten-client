@@ -1,13 +1,24 @@
-import React, { useContext } from "react";
-
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../Firebase/Firebase";
 import { toast } from "react-toastify";
 import { Link, NavLink } from "react-router";
+import { FaSun, FaMoon } from "react-icons/fa";
 
 const Navbar = () => {
   const { user, setUser } = useContext(AuthContext);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  useEffect(() => {
+    const html = document.querySelector("html");
+    html.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const handleTheme = (checked) => {
+    setTheme(checked ? "dark" : "light");
+  };
 
   const handleSignOut = () => {
     signOut(auth)
@@ -71,11 +82,6 @@ const Navbar = () => {
       <div className="w-11/12 mx-auto flex justify-between items-center py-2">
         {/* --- Logo --- */}
         <Link to="/" className="flex items-center gap-2">
-          {/* <img
-            className="w-10 h-10 sm:w-14 sm:h-14"
-            src="https://i.ibb.co.com/cKMk8Lwb/e71df2afa817fdc2af86fa2c0c5e4841-removebg-preview.png"
-            alt="Logo"
-          /> */}
           <span className="text-xl sm:text-2xl font-extrabold tracking-wide text-cyan-300">
             Habit<span className="text-pink-400">Tracker</span>
           </span>
@@ -111,7 +117,7 @@ const Navbar = () => {
             </label>
             <ul
               tabIndex={0}
-              className="menu dropdown-content mt-3 w-56 rounded-xl bg-[#101826] shadow-xl border border-cyan-700/40 p-4 text-center space-y-3"
+              className="menu dropdown-content mt-3 w-56 rounded-xl bg-[#e1f815] shadow-xl border border-cyan-700/40 p-4 text-center space-y-3"
             >
               <h1 className="text-lg font-bold text-cyan-300">
                 {user?.displayName || user?.email}
@@ -122,6 +128,20 @@ const Navbar = () => {
               >
                 My Profile
               </Link>
+
+              {/* --- Theme Toggle Icon --- */}
+              <div
+                className="flex justify-center items-center py-2 cursor-pointer text-2xl"
+                onClick={() => handleTheme(theme !== "dark")}
+              >
+                {theme === "dark" ? (
+                  <FaMoon className="text-gray-700" />
+                  
+                ) : (
+                  <FaSun className="text-yellow-400" />
+                )}
+              </div>
+
               <button
                 onClick={handleSignOut}
                 className="bg-gradient-to-r from-red-500 to-orange-400 text-white font-semibold w-full rounded-md py-2"

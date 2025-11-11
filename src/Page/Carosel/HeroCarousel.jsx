@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
 
@@ -24,19 +24,30 @@ const slides = [
 ];
 
 const HeroCarousel = () => {
+  const [current, setCurrent] = useState(0);
+
+  // Auto slide every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent(prev => (prev + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="relative w-full h-96">
-      <div className="carousel w-full h-full">
-        {slides.map((slide, index) => (
-          <div key={index} id={`item${index + 1}`} className="carousel-item w-full relative">
-            <img
-              src={slide.img}
-              alt={slide.title}
-              className="w-full h-96 object-cover"
-            />
-            <div className="absolute inset-0 flex flex-col justify-center items-center text-center bg-black/40 text-white px-4">
-              
-              {/* Motion + Typewriter Title */}
+    <div className="relative w-full h-[60vh] sm:h-[70vh] md:h-[80vh] overflow-hidden rounded-2xl">
+      {slides.map((slide, index) => (
+        index === current && (  // ✅ শুধু current slide render হবে
+          <motion.div
+            key={index}
+            className="absolute top-0 left-0 w-full h-full"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <img src={slide.img} alt={slide.title} className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-center text-white px-4">
               <motion.h1
                 className="text-3xl sm:text-5xl font-bold mb-2"
                 initial={{ opacity: 0, y: -20 }}
@@ -53,8 +64,6 @@ const HeroCarousel = () => {
                   delaySpeed={1500}
                 />
               </motion.h1>
-
-              {/* Subtitle */}
               <motion.p
                 className="text-sm sm:text-lg mb-4"
                 initial={{ opacity: 0, y: 20 }}
@@ -63,29 +72,40 @@ const HeroCarousel = () => {
               >
                 {slide.subtitle}
               </motion.p>
-
-              {/* CTA Button */}
               <motion.button
-                className="btn bg-cyan-500 hover:bg-cyan-400 text-white shadow-lg"
+                className="px-6 py-2 bg-cyan-500 hover:bg-cyan-400 text-white font-semibold rounded-xl shadow-lg"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
               >
                 {slide.cta}
               </motion.button>
-
             </div>
-          </div>
-        ))}
-      </div>
+          </motion.div>
+        )
+      ))}
 
-      {/* Dot Indicators */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
-        {slides.map((_, index) => (
-          <a
-            key={index}
-            href={`#item${index + 1}`}
-            className="w-3 h-3 rounded-full bg-white/50 hover:bg-cyan-400 transition-all"
-          ></a>
+      {/* Navigation */}
+      <button
+        onClick={() => setCurrent((current - 1 + slides.length) % slides.length)}
+        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-2 rounded-full z-10"
+      >
+        {"<"}
+      </button>
+      <button
+        onClick={() => setCurrent((current + 1) % slides.length)}
+        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-2 rounded-full z-10"
+      >
+        {">"}
+      </button>
+
+      {/* Dots */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            className={`w-3 h-3 rounded-full transition-all ${current === i ? "bg-white w-4" : "bg-white/50"}`}
+          />
         ))}
       </div>
     </div>
