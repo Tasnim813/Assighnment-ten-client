@@ -1,12 +1,13 @@
 import React from "react";
-
 import Featurecart from "./Feturecart/Featurecart";
 import { useLoaderData } from "react-router";
 import { motion } from "framer-motion";
 import WhyBuildHabits from "./WhyBuildHabits/WhyBuildHabits";
-import Banner from "./Carosel/HeroCarousel";
 import HeroCarousel from "./Carosel/HeroCarousel";
-
+import TrackProgress from "./TrackProgress/TrackProgress";
+import JoinCommunity from "./JoinCommunity/JoinCommunity";
+import BuildYourRoutine from "./BuildYourRoutine/BuildYourRoutine";
+import SuccessStories from "./SuccessStories/SuccessStories";
 
 const containerVariants = {
   hidden: {},
@@ -15,24 +16,31 @@ const containerVariants = {
 
 const Home = () => {
   const data = useLoaderData();
-//   console.log(data);
+  console.log(data);
 
   return (
-    <div className="px-4 md:px-10 lg:px-20">
-      
-      {/* Hero Banner / Slider with Typewriter */}
-     <Banner></Banner>
-     {/* <HeroCarousel></HeroCarousel> */}
+    <div >
+      {/* Hero Section */}
+      <HeroCarousel />
 
       {/* Featured Habits Section */}
-      <motion.h2
-        className="text-3xl font-bold text-purple-700 mt-16 mb-6 text-center"
-        initial={{ opacity: 0, y: 20 }}
+      <div className="w-11/12 mx-auto">
+        <motion.div
+        className="text-center mt-16 mb-10"
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        Featured Habits
-      </motion.h2>
+        <h2 className="text-3xl font-bold text-purple-700">
+          Featured Habits
+        </h2>
+        <p className="text-gray-600 mt-2 max-w-2xl mx-auto">
+          Discover some of the most effective habits that can help you stay
+          consistent, boost your productivity, and improve your lifestyle.
+          These featured habits are selected to help you build lasting
+          routines and achieve your daily goals through our Habit Tracker.
+        </p>
+      </motion.div>
 
       <motion.div
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16"
@@ -44,13 +52,15 @@ const Home = () => {
           <Featurecart key={cart._id} cart={cart} />
         ))}
       </motion.div>
+      </div>
 
       {/* Why Build Habits Section */}
       <WhyBuildHabits />
-      
-      {/* Optional: Extra Sections */}
-      {/* তুমি এখানে ২টি relevant section add করতে পারো */}
 
+      <TrackProgress></TrackProgress>
+      <JoinCommunity></JoinCommunity>
+      <BuildYourRoutine></BuildYourRoutine>
+      <SuccessStories></SuccessStories>
     </div>
   );
 };

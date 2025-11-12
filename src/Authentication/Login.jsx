@@ -1,119 +1,125 @@
+import React, { useContext, useRef, useState } from 'react';
+// import { Link } from 'react-router-dom';
+import { AuthContext } from '../Context/AuthContext';
+import { toast } from 'react-toastify';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, GoogleAuthProvider } from "firebase/auth";
+import { auth } from '.././Firebase/Firebase';
+import { motion } from 'framer-motion';
+import { Link, useLoaderData, useLocation, useNavigate } from 'react-router';
 
-import { useState } from "react";
-import SuccessAnimation from "../Component/SuccessAnimation";
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from '../Firebase/Firebase';
-import { useNavigate } from "react-router";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
+const googleprovider = new GoogleAuthProvider();
 
-export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const navigate = useNavigate();
+const Login = () => {
+    const [show, setShow] = useState(false);
+    const { user, setUser } = useContext(AuthContext);
+    const emailRef = useRef(null);
+const location=useLocation()
+const from=location.state || '/'
+const navigate=useNavigate()
+console.log(location)
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    setLoading(true);
 
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        setLoading(false);
-        setSuccess(true);
-        setTimeout(() => {
-          navigate("/");
-          setSuccess(false);
-        }, 2500);
-      })
-      .catch((err) => {
-        setLoading(false);
-        alert("Login failed! Check email or password.");
-      });
-  };
+    const handleSignIn = (e) => {
+        e.preventDefault();
+        const email = e.target.email?.value;
+        const password = e.target.password?.value;
+        signInWithEmailAndPassword(auth,email, password)
+            .then(result => {
+               if(!result.user?.emailVerified){
+                toast.error('Your email is not verified');
+                return ;
+               }
+                setUser(result.user);
+                toast.success('Successfully login');
+                navigate(from)
+            })
+            .catch(error => {
+                toast.error(error.code);
+            });
+    }
 
-  // ✅ Google Login
-  const handleGoogleLogin = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        setSuccess(true);
-        setTimeout(() => {
-          navigate("/");
-          setSuccess(false);
-        }, 2000);
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
-  };
+    const handleGoogleSignIn = (e) => {
+        e.preventDefault();
+        signInWithPopup(auth,googleprovider)
+        .then((result)=>{
+            setUser(result.user);
+            toast.success("Successfully Login");
+            navigate(from)
+        })
+        .catch(error=>{
+            toast.error(error.message);
+        })
+    }
 
-  return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-purple-100 via-white to-pink-100 px-4">
-      {success && <SuccessAnimation message="Login Successful!" />}
+  
+  
 
-      <form
-        onSubmit={handleLogin}
-        className="bg-white shadow-xl rounded-3xl p-8 w-full max-w-md relative"
-      >
-        <h1 className="text-3xl font-bold mb-6 text-center text-purple-600">
-          Login to Habit Tracker
-        </h1>
+    return (
+        <div className="min-h-screen flex items-center justify-center bg-gray-900 p-4">
+       
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              transition={{ duration: 0.5 }}
+              className="card  w-full max-w-sm shadow-2xl "
+            >
+                
+                <div>
+             <h1 className='text-white text-4xl mb-5 font-bold text-center'>Login Now!!</h1>
+                    <div className="card-body rounded-2xl bg-gray-800">
+                   
+                        <form onSubmit={handleSignIn} className="space-y-4">
+                            <div className="flex flex-col space-y-1">
+                                <label className="text-gray-300 font-semibold">Email</label>
+                                <input type="email" ref={emailRef} required name='email' 
+                                       className="input input-bordered w-full bg-gray-700 text-white border-gray-600 focus:border-cyan-400" 
+                                       placeholder="Email" 
+                                />
+                            </div>
 
-        {/* Email */}
-        <div className="mb-4">
-          <label className="block text-gray-700 mb-1">Email</label>
-          <input
-            type="email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="w-full border border-purple-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
-          />
+                            <div className="relative flex flex-col space-y-1">
+                                <label className="text-gray-300 font-semibold">Password</label>
+                                <input required type={show ? 'text' : 'password'} name='password'
+                                       className="input input-bordered w-full bg-gray-700 text-white border-gray-600 focus:border-cyan-400" 
+                                       placeholder="Password" 
+                                />
+                                <span onClick={() => setShow(!show)} 
+                                      className='absolute right-3 top-9 cursor-pointer text-gray-400 hover:text-cyan-400'>
+                                    {show ? <FaEye /> : <FaEyeSlash />}
+                                </span>
+                            </div>
+                            <div className="text-right">
+ 
+</div>
+                            
+                            <button type='submit' 
+                                    className="btn w-full bg-cyan-500 hover:bg-cyan-400 text-white font-bold shadow-lg transition-all">
+                                Login
+                            </button>
+
+                            <p className="text-center text-gray-300 text-sm">
+                                Don't have an account? <Link className="text-cyan-400 hover:text-cyan-300" to='/register'>Create an account</Link>
+                            </p>
+
+                            <div className="flex items-center justify-center gap-2 my-2">
+                                <div className="h-px w-16 bg-gray-600"></div>
+                                <span className="text-sm text-gray-400">or</span>
+                                <div className="h-px w-16 bg-gray-600"></div>
+                            </div>
+
+                            <button onClick={handleGoogleSignIn} 
+                                    className="btn w-full bg-gray-800 hover:bg-gray-700 border border-cyan-400 text-cyan-400 hover:text-white font-semibold transition-all shadow-md">
+                                Login with Google
+                            </button>
+                        </form>
+               
+                </div>
+                </div>
+            </motion.div>
         </div>
+    );
+};
 
-        {/* Password */}
-        <div className="mb-6 relative">
-          <label className="block text-gray-700 mb-1">Password</label>
-          <input
-            type={showPassword ? "text" : "password"}
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="w-full border border-purple-300 rounded-lg px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-pink-400"
-          />
-          <button
-            type="button"
-            className="absolute right-3 top-9 text-purple-500"
-            onClick={() => setShowPassword(!showPassword)}
-          >
-   {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
-          </button>
-        </div>
+export default Login;
 
-        {/* Login Button */}
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white py-2 rounded-lg hover:opacity-90 transition font-semibold mb-3"
-        >
-          {loading ? "Logging in..." : "Login"}
-        </button>
-
-        {/* Google Login Button */}
-        <button
-          type="button"
-          onClick={handleGoogleLogin}
-          className="w-full bg-white border border-gray-300 flex items-center justify-center py-2 rounded-lg hover:bg-gray-100 transition font-semibold text-gray-700"
-        >
-         <FcGoogle />
-          Login with Google
-        </button>
-      </form>
-    </div>
-  );
-}

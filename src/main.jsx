@@ -17,6 +17,7 @@ import BrowsePublicHabit from './Page/BrowsePublicHabit/BrowsePublicHabit.jsx'
 import CartDetails from './Page/Feturecart/CartDetails.jsx'
 import PublicHabitDetails from './Page/PublicHabitCard/PublicHabitDetails.jsx'
 import UpdateHabit from './Page/MyHabit/UpdateHabit.jsx'
+import PrivateRout from './PrivateRouter/PrivateRouter.jsx'
 
 const router=createBrowserRouter([
   {
@@ -27,7 +28,7 @@ const router=createBrowserRouter([
       {
         index:true,
       Component:Home,
-      loader:()=>fetch('http://localhost:3000/latest-health')
+      loader:()=>fetch('http://localhost:3000/latest-habit')
       },
       {
         path:'/login',
@@ -39,7 +40,10 @@ const router=createBrowserRouter([
       },
       {
         path:'/addHabit',
-        Component:AddHabit,
+        element :<PrivateRout>
+          <AddHabit></AddHabit>
+        </PrivateRout> 
+       
         
       },
       {
@@ -60,7 +64,8 @@ const router=createBrowserRouter([
       },
       {
         path:'/habit-details/:id',
-        Component:PublicHabitDetails,
+        element:<PrivateRout><PublicHabitDetails></PublicHabitDetails></PrivateRout>,
+        
         loader:({params})=>fetch(`http://localhost:3000/habit/${params.id}`)
       },
       {

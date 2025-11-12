@@ -26,7 +26,6 @@ const slides = [
 const HeroCarousel = () => {
   const [current, setCurrent] = useState(0);
 
-  // Auto slide every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent(prev => (prev + 1) % slides.length);
@@ -37,7 +36,7 @@ const HeroCarousel = () => {
   return (
     <div className="relative w-full h-[60vh] sm:h-[70vh] md:h-[80vh] overflow-hidden rounded-2xl">
       {slides.map((slide, index) => (
-        index === current && (  // ✅ শুধু current slide render হবে
+        index === current && (
           <motion.div
             key={index}
             className="absolute top-0 left-0 w-full h-full"
@@ -47,9 +46,9 @@ const HeroCarousel = () => {
             transition={{ duration: 0.8 }}
           >
             <img src={slide.img} alt={slide.title} className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-center text-white px-4">
+            <div className="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-center px-4">
               <motion.h1
-                className="text-3xl sm:text-5xl font-bold mb-2"
+                className="text-3xl sm:text-5xl font-bold mb-2 text-white" // ✅ Title color white
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1 }}
@@ -65,7 +64,7 @@ const HeroCarousel = () => {
                 />
               </motion.h1>
               <motion.p
-                className="text-sm sm:text-lg mb-4"
+                className="text-sm sm:text-lg mb-4 text-white" // Subtitle white for better contrast
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1.2 }}
@@ -73,7 +72,7 @@ const HeroCarousel = () => {
                 {slide.subtitle}
               </motion.p>
               <motion.button
-                className="px-6 py-2 bg-cyan-500 hover:bg-cyan-400 text-white font-semibold rounded-xl shadow-lg"
+                className="px-6 py-2 bg-purple-600 hover:bg-purple-500 text-white font-semibold rounded-xl shadow-lg"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
               >

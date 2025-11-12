@@ -4,7 +4,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../Firebase/Firebase";
 import { toast } from "react-toastify";
 import { Link, NavLink } from "react-router";
-import { FaSun, FaMoon } from "react-icons/fa";
+import { FaSun, FaMoon, FaHome, FaPlus, FaClipboardList, FaUsers } from "react-icons/fa";
 
 const Navbar = () => {
   const { user, setUser } = useContext(AuthContext);
@@ -34,74 +34,79 @@ const Navbar = () => {
       <NavLink
         to="/"
         className={({ isActive }) =>
-          `px-3 py-2 font-semibold text-sm sm:text-base transition-colors duration-200 ${
-            isActive ? "text-cyan-400" : "text-white hover:text-cyan-300"
+          `flex items-center gap-1 px-3 py-2 font-semibold text-sm sm:text-base transition-colors duration-200 ${
+            isActive ? "text-purple-600" : "text-purple-500 hover:text-purple-700"
           }`
         }
       >
-        Home
+        <FaHome /> Home
       </NavLink>
 
-      <NavLink
-        to="/addHabit"
-        className={({ isActive }) =>
-          `px-3 py-2 font-semibold text-sm sm:text-base transition-colors duration-200 ${
-            isActive ? "text-cyan-400" : "text-white hover:text-cyan-300"
-          }`
-        }
-      >
-        Add Habit
-      </NavLink>
+      {user && (
+        <>
+          <NavLink
+            to="/addHabit"
+            className={({ isActive }) =>
+              `flex items-center gap-1 px-3 py-2 font-semibold text-sm sm:text-base transition-colors duration-200 ${
+                isActive ? "text-purple-600" : "text-purple-500 hover:text-purple-700"
+              }`
+            }
+          >
+            <FaPlus /> Add Habit
+          </NavLink>
 
-      <NavLink
-        to="/myHabit"
-        className={({ isActive }) =>
-          `px-3 py-2 font-semibold text-sm sm:text-base transition-colors duration-200 ${
-            isActive ? "text-cyan-400" : "text-white hover:text-cyan-300"
-          }`
-        }
-      >
-        My Habits
-      </NavLink>
+          <NavLink
+            to="/myHabit"
+            className={({ isActive }) =>
+              `flex items-center gap-1 px-3 py-2 font-semibold text-sm sm:text-base transition-colors duration-200 ${
+                isActive ? "text-purple-600" : "text-purple-500 hover:text-purple-700"
+              }`
+            }
+          >
+            <FaClipboardList /> My Habits
+          </NavLink>
+        </>
+      )}
 
       <NavLink
         to="/browsePublicHabit"
         className={({ isActive }) =>
-          `px-3 py-2 font-semibold text-sm sm:text-base transition-colors duration-200 ${
-            isActive ? "text-cyan-400" : "text-white hover:text-cyan-300"
+          `flex items-center gap-1 px-3 py-2 font-semibold text-sm sm:text-base transition-colors duration-200 ${
+            isActive ? "text-purple-600" : "text-purple-500 hover:text-purple-700"
           }`
         }
       >
-        Browse Public Habits
+        <FaUsers /> Browse Public Habits
       </NavLink>
     </>
   );
 
   return (
-    <nav className="navbar sticky top-0 z-50 w-full bg-gradient-to-r from-[#081322]/90 to-[#0a0f1f]/90 backdrop-blur-lg border-b border-cyan-500/20 text-white shadow-md shadow-cyan-500/10">
+    <nav className="navbar sticky top-0 z-50 w-full bg-white text-purple-500 border-b border-purple-300 shadow-md shadow-purple-200">
       <div className="w-11/12 mx-auto flex justify-between items-center py-2">
-        {/* --- Logo --- */}
+        {/* Logo with Icon */}
         <Link to="/" className="flex items-center gap-2">
-          <span className="text-xl sm:text-2xl font-extrabold tracking-wide text-cyan-300">
-            Habit<span className="text-pink-400">Tracker</span>
+          <FaClipboardList className="text-purple-600 w-7 h-7" />
+          <span className="text-xl sm:text-2xl font-extrabold tracking-wide text-purple-600">
+            HabitTracker
           </span>
         </Link>
 
-        {/* --- Desktop Links --- */}
+        {/* Desktop Links */}
         <div className="hidden lg:flex items-center space-x-2">{Links}</div>
 
-        {/* --- Auth Buttons (Desktop) --- */}
+        {/* Auth Buttons */}
         {!user ? (
           <div className="hidden lg:flex items-center space-x-3">
             <Link
               to="/login"
-              className="bg-cyan-400 hover:bg-cyan-300 text-white font-semibold px-5 py-2 rounded-lg"
+              className="bg-purple-100 hover:bg-purple-200 text-purple-600 font-semibold px-5 py-2 rounded-lg"
             >
               Login
             </Link>
             <Link
               to="/register"
-              className="bg-pink-400 hover:bg-pink-300 text-white font-semibold px-5 py-2 rounded-lg"
+              className="bg-purple-100 hover:bg-purple-200 text-purple-600 font-semibold px-5 py-2 rounded-lg"
             >
               Register
             </Link>
@@ -112,39 +117,32 @@ const Navbar = () => {
               <img
                 src={user?.photoURL || "https://via.placeholder.com/88"}
                 alt="User"
-                className="h-10 w-10 rounded-full border-2 border-cyan-400 cursor-pointer"
+                className="h-10 w-10 rounded-full border-2 border-purple-500 cursor-pointer"
               />
             </label>
             <ul
               tabIndex={0}
-              className="menu dropdown-content mt-3 w-56 rounded-xl bg-[#e1f815] shadow-xl border border-cyan-700/40 p-4 text-center space-y-3"
+              className="menu dropdown-content mt-3 w-56 rounded-xl bg-white shadow-xl border border-purple-300 p-4 text-center space-y-3"
             >
-              <h1 className="text-lg font-bold text-cyan-300">
+              <h1 className="text-lg font-bold text-purple-600">
                 {user?.displayName || user?.email}
               </h1>
-              <Link
-                to="/profile"
-                className="bg-gradient-to-r from-cyan-400 to-pink-400 text-white font-semibold w-full rounded-md py-2"
-              >
-                My Profile
-              </Link>
 
-              {/* --- Theme Toggle Icon --- */}
+              {/* Theme Toggle */}
               <div
                 className="flex justify-center items-center py-2 cursor-pointer text-2xl"
                 onClick={() => handleTheme(theme !== "dark")}
               >
                 {theme === "dark" ? (
-                  <FaMoon className="text-gray-700" />
-                  
+                  <FaMoon className="text-purple-500" />
                 ) : (
-                  <FaSun className="text-yellow-400" />
+                  <FaSun className="text-purple-500" />
                 )}
               </div>
 
               <button
                 onClick={handleSignOut}
-                className="bg-gradient-to-r from-red-500 to-orange-400 text-white font-semibold w-full rounded-md py-2"
+                className="bg-purple-100 text-purple-600 font-semibold w-full rounded-md py-2"
               >
                 Sign Out
               </button>
@@ -152,12 +150,12 @@ const Navbar = () => {
           </div>
         )}
 
-        {/* --- Mobile Menu --- */}
+        {/* Mobile Menu */}
         <div className="lg:hidden dropdown dropdown-end">
           <div
             tabIndex={0}
             role="button"
-            className="btn btn-ghost text-cyan-300 p-2 hover:bg-cyan-900/20"
+            className="btn btn-ghost text-purple-500 p-2 hover:bg-purple-100"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -177,40 +175,32 @@ const Navbar = () => {
 
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content right-0 mt-3 w-56 p-4 rounded-xl bg-[#101826] shadow-lg border border-cyan-700/30 space-y-3"
+            className="menu menu-sm dropdown-content right-0 mt-3 w-56 p-4 rounded-xl bg-white shadow-lg border border-purple-300 space-y-3"
           >
             {Links}
-            <hr className="border-cyan-700/30" />
+            <hr className="border-purple-300" />
             {!user ? (
               <>
                 <Link
                   to="/login"
-                  className="bg-cyan-400 text-white w-full rounded-md py-2 text-center"
+                  className="bg-purple-100 text-purple-600 w-full rounded-md py-2 text-center"
                 >
                   Login
                 </Link>
                 <Link
                   to="/register"
-                  className="bg-pink-400 text-white w-full rounded-md py-2 text-center"
+                  className="bg-purple-100 text-purple-600 w-full rounded-md py-2 text-center"
                 >
-                  Register
+                  Signup
                 </Link>
               </>
             ) : (
-              <>
-                <Link
-                  to="/profile"
-                  className="bg-gradient-to-r from-cyan-400 to-pink-400 text-white w-full rounded-md py-2 text-center"
-                >
-                  My Profile
-                </Link>
-                <button
-                  onClick={handleSignOut}
-                  className="bg-gradient-to-r from-red-500 to-orange-400 text-white w-full rounded-md py-2 text-center"
-                >
-                  Sign Out
-                </button>
-              </>
+              <button
+                onClick={handleSignOut}
+                className="bg-purple-100 text-purple-600 w-full rounded-md py-2 text-center"
+              >
+                Sign Out
+              </button>
             )}
           </ul>
         </div>
