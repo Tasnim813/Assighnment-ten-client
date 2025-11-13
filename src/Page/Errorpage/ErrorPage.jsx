@@ -32,7 +32,7 @@ const ErrorPage = () => {
         transition={{ delay: 0.4 }}
         className="text-xl font-semibold text-gray-700 mb-4"
       >
-        Unauthorized Access
+        Page Not Found
       </motion.h2>
 
       <motion.p
