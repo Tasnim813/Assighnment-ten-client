@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
+import { motion } from "framer-motion";
 
 const UpdateHabit = () => {
   const loadedHabit = useLoaderData();
-  console.log(loadedHabit)
   const navigate = useNavigate();
 
-  // Local state for form fields
   const [formData, setFormData] = useState({
     title: loadedHabit.title || "",
     description: loadedHabit.description || "",
@@ -17,7 +16,9 @@ const UpdateHabit = () => {
     isPublic: loadedHabit.isPublic || false,
   });
 
-  // Handle input change
+  const [loading, setLoading] = useState(false);
+
+  // ✅ Handle Input Changes
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -26,44 +27,63 @@ const UpdateHabit = () => {
     });
   };
 
-  // Submit updated data
+  // ✅ Handle Submit
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
 
     fetch(`http://localhost:3000/habit/${loadedHabit._id}`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result)
-        if (result.modifiedCount ) {
+        setLoading(false);
+        if (result.modifiedCount) {
           Swal.fire({
             icon: "success",
-            title: "Habit Updated!",
+            title: "✅ Habit Updated!",
             text: "Your habit details have been successfully updated.",
+            confirmButtonColor: "#7e22ce",
           });
           navigate("/myHabit");
+        } else {
+          Swal.fire({
+            icon: "info",
+            title: "No Changes Made",
+            text: "You didn't modify any fields.",
+            confirmButtonColor: "#7e22ce",
+          });
         }
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        setLoading(false);
+        Swal.fire({
+          icon: "error",
+          title: "❌ Update Failed!",
+          text: "Something went wrong. Please try again.",
+          confirmButtonColor: "#7e22ce",
+        });
+        console.error(err);
+      });
   };
 
- 
-
   return (
-    <div className="max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-md mt-10">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+    <motion.div
+      className="max-w-3xl mx-auto bg-white border border-purple-200 shadow-lg rounded-2xl p-8 my-12"
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+    >
+      <h2 className="text-3xl font-bold text-center mb-8 text-purple-700">
         Update Habit
       </h2>
 
-      <form  onSubmit={handleSubmit} className="space-y-4">
-        {/* Title */}
+      <form onSubmit={handleSubmit} className="space-y-5">
+        {/* Habit Title */}
         <div>
-          <label className="block text-gray-700 font-medium mb-1">
+          <label className="block font-medium mb-2 text-gray-700">
             Habit Title
           </label>
           <input
@@ -71,29 +91,29 @@ const UpdateHabit = () => {
             name="title"
             value={formData.title}
             onChange={handleChange}
-            className="w-full border rounded-lg px-3 py-2 focus:outline-blue-500"
             required
+            className="w-full border border-purple-300 focus:border-purple-500 px-4 py-2 rounded-xl outline-none"
           />
         </div>
 
         {/* Description */}
         <div>
-          <label className="block text-gray-700 font-medium mb-1">
+          <label className="block font-medium mb-2 text-gray-700">
             Description
           </label>
           <textarea
             name="description"
             value={formData.description}
             onChange={handleChange}
-            className="w-full border rounded-lg px-3 py-2 focus:outline-blue-500"
-            rows="3"
             required
+            className="w-full border border-purple-300 focus:border-purple-500 px-4 py-2 rounded-xl outline-none"
+            rows="3"
           ></textarea>
         </div>
 
         {/* Category */}
         <div>
-          <label className="block text-gray-700 font-medium mb-1">
+          <label className="block font-medium mb-2 text-gray-700">
             Category
           </label>
           <input
@@ -101,13 +121,13 @@ const UpdateHabit = () => {
             name="category"
             value={formData.category}
             onChange={handleChange}
-            className="w-full border rounded-lg px-3 py-2 focus:outline-blue-500"
+            className="w-full border border-purple-300 focus:border-purple-500 px-4 py-2 rounded-xl outline-none"
           />
         </div>
 
         {/* Reminder Time */}
         <div>
-          <label className="block text-gray-700 font-medium mb-1">
+          <label className="block font-medium mb-2 text-gray-700">
             Reminder Time
           </label>
           <input
@@ -115,13 +135,13 @@ const UpdateHabit = () => {
             name="reminderTime"
             value={formData.reminderTime}
             onChange={handleChange}
-            className="w-full border rounded-lg px-3 py-2 focus:outline-blue-500"
+            className="w-full border border-purple-300 focus:border-purple-500 px-4 py-2 rounded-xl outline-none"
           />
         </div>
 
         {/* Image URL */}
         <div>
-          <label className="block text-gray-700 font-medium mb-1">
+          <label className="block font-medium mb-2 text-gray-700">
             Image URL
           </label>
           <input
@@ -129,31 +149,38 @@ const UpdateHabit = () => {
             name="image"
             value={formData.image}
             onChange={handleChange}
-            className="w-full border rounded-lg px-3 py-2 focus:outline-blue-500"
+            placeholder="https://example.com/habit.jpg"
+            className="w-full border border-purple-300 focus:border-purple-500 px-4 py-2 rounded-xl outline-none"
           />
         </div>
 
-        {/* Public / Private */}
-        <div className="flex items-center gap-2">
+        {/* Public / Private Toggle */}
+        <div className="flex items-center gap-3 mt-3">
           <input
             type="checkbox"
             name="isPublic"
             checked={formData.isPublic}
             onChange={handleChange}
-            className="w-4 h-4"
+            className="w-5 h-5 accent-purple-600"
           />
-          <label className="text-gray-700 font-medium">Make Public</label>
+          <label className="text-gray-700 font-medium">
+            Make this habit public
+          </label>
         </div>
 
         {/* Submit Button */}
-        <button
+        <motion.button
           type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold mt-4 transition"
+          disabled={loading}
+          whileTap={{ scale: 0.95 }}
+          className={`w-full py-3 rounded-xl font-semibold text-white transition-all ${
+            loading ? "bg-purple-300" : "bg-purple-600 hover:bg-purple-700"
+          }`}
         >
-          Update Habit
-        </button>
+          {loading ? "Updating..." : "Update Habit"}
+        </motion.button>
       </form>
-    </div>
+    </motion.div>
   );
 };
 

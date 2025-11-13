@@ -35,7 +35,7 @@ const BrowsePublicHabit = () => {
     }
 
     return (
-        <div className='w-11/12 mx-auto'>
+        <div className='w-11/12 mx-auto mb-10'>
             <h1 className='text-5xl text-center font-bold mt-5 mb-5'>All Habit</h1>
             <form onSubmit={handleSubmit} className='text-center mt-5 mb-10 flex justify-center gap-2'>
                 <label className="input rounded-full flex items-center">

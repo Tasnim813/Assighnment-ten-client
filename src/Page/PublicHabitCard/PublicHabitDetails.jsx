@@ -4,6 +4,7 @@ import { FaClock, FaUser, FaLayerGroup, FaEnvelope, FaCheckCircle, FaFire } from
 import { useNavigate, useParams } from "react-router";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
+import Loading from "../../Loading/Loading";
 
 const PublicHabitDetails = () => {
   const { id } = useParams();
@@ -27,7 +28,7 @@ const PublicHabitDetails = () => {
       });
   }, [id]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading></Loading>;
   if (!habit) return <p>Habit not found</p>;
 
   const {

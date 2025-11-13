@@ -34,7 +34,7 @@ const HeroCarousel = () => {
   }, []);
 
   return (
-    <div className="relative w-full h-[60vh] sm:h-[70vh] md:h-[80vh] overflow-hidden rounded-2xl">
+    <div className="relative w-full h-[60vh] sm:h-[70vh] md:h-[80vh] overflow-hidden ">
       {slides.map((slide, index) => (
         index === current && (
           <motion.div

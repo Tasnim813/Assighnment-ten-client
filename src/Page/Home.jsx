@@ -57,9 +57,9 @@ const Home = () => {
       {/* Why Build Habits Section */}
       <WhyBuildHabits />
 
-      <TrackProgress></TrackProgress>
+      {/* <TrackProgress></TrackProgress> */}
       <JoinCommunity></JoinCommunity>
-      <BuildYourRoutine></BuildYourRoutine>
+      {/* <BuildYourRoutine></BuildYourRoutine> */}
       <SuccessStories></SuccessStories>
     </div>
   );

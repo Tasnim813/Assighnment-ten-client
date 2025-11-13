@@ -35,7 +35,7 @@ const Navbar = () => {
         to="/"
         className={({ isActive }) =>
           `flex items-center gap-1 px-3 py-2 font-semibold text-sm sm:text-base transition-colors duration-200 ${
-            isActive ? "text-purple-600" : "text-purple-500 hover:text-purple-700"
+            isActive ? "text-purple-800 bg-purple-200 rounded-full " : "text-purple-500 hover:text-purple-700"
           }`
         }
       >
@@ -48,7 +48,7 @@ const Navbar = () => {
             to="/addHabit"
             className={({ isActive }) =>
               `flex items-center gap-1 px-3 py-2 font-semibold text-sm sm:text-base transition-colors duration-200 ${
-                isActive ? "text-purple-600" : "text-purple-500 hover:text-purple-700"
+                isActive ? "text-purple-800 bg-purple-200 rounded-full" : "text-purple-500 hover:text-purple-700"
               }`
             }
           >
@@ -59,7 +59,7 @@ const Navbar = () => {
             to="/myHabit"
             className={({ isActive }) =>
               `flex items-center gap-1 px-3 py-2 font-semibold text-sm sm:text-base transition-colors duration-200 ${
-                isActive ? "text-purple-600" : "text-purple-500 hover:text-purple-700"
+                isActive ? "text-purple-600 bg-purple-200 rounded-full" : "text-purple-500 hover:text-purple-700"
               }`
             }
           >
@@ -72,7 +72,7 @@ const Navbar = () => {
         to="/browsePublicHabit"
         className={({ isActive }) =>
           `flex items-center gap-1 px-3 py-2 font-semibold text-sm sm:text-base transition-colors duration-200 ${
-            isActive ? "text-purple-600" : "text-purple-500 hover:text-purple-700"
+            isActive ? "text-purple-600 bg-purple-200 rounded-full" : "text-purple-500 hover:text-purple-700"
           }`
         }
       >
@@ -108,46 +108,49 @@ const Navbar = () => {
               to="/register"
               className="bg-purple-100 hover:bg-purple-200 text-purple-600 font-semibold px-5 py-2 rounded-lg"
             >
-              Register
+             Signup
             </Link>
           </div>
         ) : (
           <div className="dropdown dropdown-end hidden lg:block">
-            <label tabIndex={0}>
-              <img
-                src={user?.photoURL || "https://via.placeholder.com/88"}
-                alt="User"
-                className="h-10 w-10 rounded-full border-2 border-purple-500 cursor-pointer"
-              />
-            </label>
-            <ul
-              tabIndex={0}
-              className="menu dropdown-content mt-3 w-56 rounded-xl bg-white shadow-xl border border-purple-300 p-4 text-center space-y-3"
-            >
-              <h1 className="text-lg font-bold text-purple-600">
-                {user?.displayName || user?.email}
-              </h1>
+  <label tabIndex={0}>
+    <img
+      src={user?.photoURL || "https://via.placeholder.com/88"}
+      alt="User"
+      className="h-10 w-10 rounded-full border-2 border-purple-500 cursor-pointer"
+    />
+  </label>
+  <ul
+    tabIndex={0}
+    className="menu dropdown-content mt-3 w-56 rounded-xl bg-white shadow-xl border border-purple-300 p-4 text-center space-y-3"
+  >
+    <div>
+      <h1 className="text-lg font-bold text-purple-600">
+        {user?.displayName || "User"}
+      </h1>
+      <p className="text-sm font-bold text-purple-500">{user?.email}</p>
+    </div>
 
-              {/* Theme Toggle */}
-              <div
-                className="flex justify-center items-center py-2 cursor-pointer text-2xl"
-                onClick={() => handleTheme(theme !== "dark")}
-              >
-                {theme === "dark" ? (
-                  <FaMoon className="text-purple-500" />
-                ) : (
-                  <FaSun className="text-purple-500" />
-                )}
-              </div>
+    {/* Theme Toggle */}
+    <div
+      className="flex justify-center items-center py-2 cursor-pointer text-2xl"
+      onClick={() => handleTheme(theme !== "dark")}
+    >
+      {theme === "dark" ? (
+        <FaMoon className="text-purple-500" />
+      ) : (
+        <FaSun className="text-purple-500" />
+      )}
+    </div>
 
-              <button
-                onClick={handleSignOut}
-                className="bg-purple-100 text-purple-600 font-semibold w-full rounded-md py-2"
-              >
-                Sign Out
-              </button>
-            </ul>
-          </div>
+    <button
+      onClick={handleSignOut}
+      className="bg-purple-100 text-purple-600 font-semibold w-full rounded-md py-2"
+    >
+      Sign Out
+    </button>
+  </ul>
+</div>
         )}
 
         {/* Mobile Menu */}

@@ -3,7 +3,7 @@ import { FaUsers, FaHeart, FaHandshake } from "react-icons/fa";
 
 const JoinCommunity = () => {
   return (
-    <section className="relative py-20 px-6 md:px-10 lg:px-20 mt-20 bg-gradient-to-r from-purple-100 via-purple-50 to-purple-100 rounded-3xl overflow-hidden">
+    <section className="w-11/12 mx-auto relative py-20 px-6 md:px-10 lg:px-20 mt-20 bg-gradient-to-r from-purple-100 via-purple-50 to-purple-100 rounded-3xl overflow-hidden">
       {/* Decorative blur backgrounds */}
       <div className="absolute -top-20 -right-20 w-72 h-72 bg-purple-300 rounded-full blur-3xl opacity-30" />
       <div className="absolute bottom-0 left-0 w-80 h-80 bg-purple-200 rounded-full blur-3xl opacity-40" />

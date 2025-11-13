@@ -6,37 +6,37 @@ const SuccessStories = () => {
       name: "Amina Rahman",
       quote:
         "I started tracking my morning habits and became more focused every day!",
-      image: "https://i.ibb.co/4P4WQjD/user1.jpg",
+      image: "https://i.ibb.co.com/JwFWpq1K/360-F-757612374-09-Q9dyx-OKbyn-Ci-T3h-MUyk3i-Euo-R1-Rg-Jy.jpg",
     },
     {
       name: "Rafiul Hasan",
       quote:
         "Building small habits helped me stay consistent with workouts for 90 days straight!",
-      image: "https://i.ibb.co/4R6FLB2/user2.jpg",
+      image: "https://i.ibb.co.com/CK2BnhzV/3929121.webp",
     },
     {
       name: "Tania Akter",
       quote:
         "The tracker helped me stay accountable and reduce procrastination.",
-      image: "https://i.ibb.co/0cZP4y9/user3.jpg",
+      image: "https://i.ibb.co.com/9khpdbWt/2a7d4c4bc1381a476b8b8a85885ac392.jpg",
     },
     {
       name: "Mahfuz Alam",
       quote:
         "This app completely changed how I plan my mornings — I feel more productive!",
-      image: "https://i.ibb.co/FXtQn8d/user4.jpg",
+      image: "https://i.ibb.co.com/vCQN9wfn/93f40ec756290812571be534e12bcfe7.jpg",
     },
     {
       name: "Raisa Chowdhury",
       quote:
         "The community and streak system kept me consistent for over 100 days.",
-      image: "https://i.ibb.co/mvnbd9L/user5.jpg",
+      image: "https://i.ibb.co.com/chY7ZcrW/pngtree-poised-identity-a-formal-passport-photo-of-young-muslim-woman-png-image-16748447.webp",
     },
     {
       name: "Nafis Islam",
       quote:
         "Small steps each day really do make a big difference. Love the clean design!",
-      image: "https://i.ibb.co/bHfBgGx/user6.jpg",
+      image: "https://i.ibb.co.com/GQPKsmBf/images.jpg",
     },
   ];
 
@@ -68,7 +68,7 @@ const SuccessStories = () => {
           {duplicatedStories.map((s, idx) => (
             <motion.div
               key={idx}
-              className="min-w-[280px] md:min-w-[320px] bg-white p-6 rounded-2xl shadow-md text-center hover:shadow-xl transition-all"
+              className="min-w-[280px] md:min-w-[320px] bg-purple-300 p-6 rounded-2xl shadow-md text-center hover:shadow-xl transition-all"
               whileHover={{ scale: 1.05 }}
             >
               <img
