@@ -145,17 +145,7 @@ const handleSignOut = () => {
       <p className="text-sm font-bold text-purple-500">{user?.email}</p>
     </div>
 
-    {/* Theme Toggle */}
-    <div
-      className="flex justify-center items-center py-2 cursor-pointer text-2xl"
-      onClick={() => handleTheme(theme !== "dark")}
-    >
-      {theme === "dark" ? (
-        <FaMoon className="text-purple-500" />
-      ) : (
-        <FaSun className="text-purple-500" />
-      )}
-    </div>
+   
 
     <button
       onClick={handleSignOut}
