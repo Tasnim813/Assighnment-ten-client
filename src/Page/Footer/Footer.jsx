@@ -1,5 +1,6 @@
 import React from "react";
 import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin } from "react-icons/fa";
+import { GiHabitatDome } from "react-icons/gi";
 
 const Footer = () => {
   return (
@@ -8,11 +9,7 @@ const Footer = () => {
         {/* Logo and About */}
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/747/747310.png"
-              alt="Habit Tracker Logo"
-              className="w-10 h-10 rounded-full border border-white"
-            />
+             <GiHabitatDome size={30} color="white" />
             <h2 className="text-2xl font-bold text-white">Habit Tracker</h2>
           </div>
           <p className="text-sm text-gray-200 leading-relaxed">

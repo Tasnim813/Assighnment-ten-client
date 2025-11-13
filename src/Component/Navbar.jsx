@@ -5,7 +5,8 @@ import { auth } from "../Firebase/Firebase";
 import { toast } from "react-toastify";
 import { Link, NavLink } from "react-router";
 import { FaSun, FaMoon, FaHome, FaPlus, FaClipboardList, FaUsers } from "react-icons/fa";
-
+import { GiHabitatDome } from "react-icons/gi";
+import Swal from "sweetalert2";
 const Navbar = () => {
   const { user, setUser } = useContext(AuthContext);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
@@ -20,14 +21,27 @@ const Navbar = () => {
     setTheme(checked ? "dark" : "light");
   };
 
-  const handleSignOut = () => {
-    signOut(auth)
-      .then(() => {
-        toast.success("Signed out successfully");
-        setUser(null);
-      })
-      .catch((error) => toast.error(error.message));
-  };
+ 
+
+const handleSignOut = () => {
+  signOut(auth)
+    .then(() => {
+      Swal.fire({
+        icon: "success",
+        title: "Signed out successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setUser(null);
+    })
+    .catch((error) => {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.message,
+      });
+    });
+};
 
   const Links = (
     <>
@@ -86,7 +100,7 @@ const Navbar = () => {
       <div className="w-11/12 mx-auto flex justify-between items-center py-2">
         {/* Logo with Icon */}
         <Link to="/" className="flex items-center gap-2">
-          <FaClipboardList className="text-purple-600 w-7 h-7" />
+        <GiHabitatDome size={30} color="purple" />
           <span className="text-xl sm:text-2xl font-extrabold tracking-wide text-purple-600">
             HabitTracker
           </span>

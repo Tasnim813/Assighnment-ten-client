@@ -23,7 +23,7 @@ const ErrorPage = () => {
         transition={{ delay: 0.2 }}
         className="text-6xl font-extrabold text-purple-700 mb-2"
       >
-        401
+        404
       </motion.h1>
 
       <motion.h2

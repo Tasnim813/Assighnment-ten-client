@@ -32,7 +32,7 @@ const UpdateHabit = () => {
     e.preventDefault();
     setLoading(true);
 
-    fetch(`http://localhost:3000/habit/${loadedHabit._id}`, {
+    fetch(`https://habit-tracker-server-six.vercel.app/habit/${loadedHabit._id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),

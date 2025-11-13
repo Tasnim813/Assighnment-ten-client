@@ -28,7 +28,7 @@ const router=createBrowserRouter([
       {
         index:true,
       Component:Home,
-      loader:()=>fetch('http://localhost:3000/latest-habit')
+      loader:()=>fetch('https://habit-tracker-server-six.vercel.app/latest-habit')
       },
       {
         path:'/login',
@@ -60,18 +60,18 @@ const router=createBrowserRouter([
       {
         path:"/health-details/:id",
         Component:CartDetails,
-        loader:({params})=>fetch(`http://localhost:3000/health/${params.id}`),
+        loader:({params})=>fetch(`https://habit-tracker-server-six.vercel.app/health/${params.id}`),
       },
       {
         path:'/habit-details/:id',
         element:<PrivateRout><PublicHabitDetails></PublicHabitDetails></PrivateRout>,
         
-        loader:({params})=>fetch(`http://localhost:3000/habit/${params.id}`)
+        loader:({params})=>fetch(`https://habit-tracker-server-six.vercel.app/habit/${params.id}`)
       },
       {
         path:'/update-habit/:id',
         Component:UpdateHabit,
-        loader:({params})=>fetch(`http://localhost:3000/habit/${params.id}`)
+        loader:({params})=>fetch(`https://habit-tracker-server-six.vercel.app/habit/${params.id}`)
         
       }
      

@@ -26,7 +26,7 @@ const AddHabit = () => {
       isPublic: true,
     };
 
-    fetch("http://localhost:3000/habit", {
+    fetch("https://habit-tracker-server-six.vercel.app/habit", {
       method: "POST",
       headers: {
         "content-type": "application/json",

@@ -13,7 +13,7 @@ const Myhabit = () => {
   useEffect(() => {
     if (!user?.email) return;
 
-    fetch(`http://localhost:3000/my-habit?email=${user.email}`)
+    fetch(`https://habit-tracker-server-six.vercel.app/my-habit?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         setModel(data);

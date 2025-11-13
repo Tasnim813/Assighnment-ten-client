@@ -10,7 +10,7 @@ const Habit = ({ cart }) => {
 
   // ✅ Load current streak info (যাতে ড্যাশবোর্ডে লোড হবার সময় দেখা যায়)
   useEffect(() => {
-    fetch(`http://localhost:3000/habit/${_id}`)
+    fetch(`https://habit-tracker-server-six.vercel.app/habit/${_id}`)
       .then((res) => res.json())
       .then((data) => {
         setStreak(data?.streak || 0);
@@ -21,7 +21,7 @@ const Habit = ({ cart }) => {
   // ✅ Handle Mark Complete (exact same as PublicHabitDetails)
   const handleMarkComplete = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/habit/${_id}/complete`, {
+      const res = await fetch(`https://habit-tracker-server-six.vercel.app/habit/${_id}/complete`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
       });
@@ -49,7 +49,7 @@ const handleDelete = () => {
     confirmButtonText: "Yes, delete it!",
   }).then((result) => {
     if (result.isConfirmed) {
-      fetch(`http://localhost:3000/habit/${_id}`, {
+      fetch(`https://habit-tracker-server-six.vercel.app/habit/${_id}`, {
         method: "DELETE",
         headers: {
           "content-type": "application/json",

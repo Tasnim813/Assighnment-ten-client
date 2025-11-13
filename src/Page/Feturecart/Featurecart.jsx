@@ -8,16 +8,16 @@ const cardVariants = {
 };
 
 const Featurecart = ({ cart }) => {
-    const{image,_id}=cart
-    // console.log(cart)
+    const { image, _id } = cart;
+
   return (
     <motion.div
       variants={cardVariants}
       whileHover={{ scale: 1.05 }}
-      className="max-w-sm bg-gradient-to-br from-purple-50 via-white to-pink-50 rounded-3xl shadow-xl overflow-hidden m-4 border-t-4 border-purple-600 transition-all duration-300"
+      className="max-w-sm bg-gradient-to-br from-purple-50 via-white to-pink-50 rounded-3xl shadow-xl overflow-hidden m-4 transition-all duration-300"
     >
       {/* Habit Image */}
-      <div className="relative ">
+      <div className="relative">
         <img
           className="w-full h-48 object-cover rounded-t-3xl"
           src={image}
@@ -46,7 +46,10 @@ const Featurecart = ({ cart }) => {
         </div>
 
         {/* View Details Button */}
-        <Link to={`/habit-details/${_id}`} className="btn w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white py-2 rounded-2xl hover:opacity-90 transition font-semibold shadow-lg mt-3">
+        <Link
+          to={`/habit-details/${_id}`}
+          className="btn w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white py-2 rounded-2xl hover:opacity-90 transition font-semibold shadow-lg mt-3"
+        >
           View Details
         </Link>
       </div>

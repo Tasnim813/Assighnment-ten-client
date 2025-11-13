@@ -16,7 +16,7 @@ const PublicHabitDetails = () => {
   const defaultImage = "https://via.placeholder.com/600x400.png?text=No+Image";
 
   useEffect(() => {
-    fetch(`http://localhost:3000/habit/${id}`)
+    fetch(`https://habit-tracker-server-six.vercel.app/habit/${id}`)
       .then(res => res.json())
       .then(data => {
         setHabit(data);
@@ -50,7 +50,7 @@ const PublicHabitDetails = () => {
     }
 
     try {
-      const res = await fetch(`http://localhost:3000/habit/${id}/complete`, {
+      const res = await fetch(`https://habit-tracker-server-six.vercel.app/habit/${id}/complete`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userEmail: user.email }),
