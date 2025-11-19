@@ -1,261 +1,201 @@
 
-🌟 Habit Tracker – Build Better Habits Every Day
 
-A full-stack MERN-based habit-tracking application where users can create habits, track progress, build streaks, and improve productivity.
-Users can add habits, update, delete, browse public habits, and mark daily tasks complete.
+# 🌟 Habit Tracker – Build Better Habits Every Day
 
-Live Demo →https://peaceful-syrniki-4fb1e7.netlify.app/
+A full‑stack **MERN Habit Tracking Application** where users can create habits, track daily progress, build streaks, and browse public habits.
 
-🚀 Features
+Live Demo: **https://peaceful-syrniki-4fb1e7.netlify.app/**
 
-🔐 Email/Password + Google Authentication (Firebase)
+---
 
-🧑‍💻 Private Routes for Add Habit, My Habits & Details page
+## 🖼️ Screenshot
 
-📊 Streak Tracking with real-time completion history
+![Project Screenshot](https://i.ibb.co.com/RGr3J3Xy/12566dfhdf.png)
 
-🌍 Browse Public Habits with search + filter
 
-📝 Full CRUD Operations on habits
 
-⚡ Framer Motion Animations
+## 🚀 Features
 
-🔔 Toast / SweetAlert2 Notifications
+* 🔐 **Email/Password + Google Authentication** (Firebase)
+* 🧑‍💻 **Private Routes** for Add Habit, My Habits & Details
+* 📊 **Streak Tracking** with real‑time progress
+* 🌍 **Browse Public Habits** with Search + Filter
+* 📝 **Full CRUD Operations**
+* ⚡ **Framer Motion Animations**
+* 🔔 **SweetAlert2 / Toast Notifications**
+* 📱 **Fully Responsive UI**
+* ☁️ Client on Netlify | Server on Vercel
 
-📱 Fully responsive on mobile, tablet & PC
+---
 
-☁️ Client hosted on Netlify / Surge / Firebase
+## 📦 Tech Stack
 
-🛠️ Server hosted on Vercel (MongoDB Atlas)
+### **Frontend**
 
-📦 Tech Stack
-Frontend
+* React (SPA)
+* React Router
+* Firebase Authentication
+* Axios
+* SweetAlert2 / React Toastify
+* Framer Motion
+* React Icons
 
-React (SPA)
+### **Backend**
 
-React Router
+* Node.js
+* Express.js
+* MongoDB Atlas
+* JWT (optional)
+* Vercel Deployment
 
-Firebase Authentication
+---
 
-SweetAlert2 / React Toastify
+## 🧭 Project Overview
 
-Framer Motion
+A clean, fast, and user‑friendly habit tracking platform that helps users:
 
-Axios
+* Build consistency through streaks
+* Track daily progress
+* Explore public habits created by others
+* Manage personal habits with CRUD operations
 
-React Icons
+---
 
-Backend
 
-Node.js
 
-Express.js
+## 🔧 Backend API Endpoints
 
-MongoDB Atlas
+```
+POST   /habit                → Create Habit
+GET    /habits               → Get All Public Habits
+GET    /user-habits/:email   → Get User Habits
+GET    /habit/:id            → Habit Details
+PUT    /habit/:id            → Update Habit
+DELETE /habit/:id            → Delete Habit
+PUT    /habit/:id/complete   → Mark Complete
+```
 
-JWT (optional Firebase Admin)
+---
 
-Vercel Deployment
+## 🧪 Core Features (Detailed)
 
-🧭 Project Functionalities (Detailed)
-🔹 1. Authentication
+### 1️⃣ Authentication
 
-Email + Password registration
+* Email/password registration
+* Google sign‑in
+* Strong password rules
+* Toast/SweetAlert2 messages
+* Persistent login on refresh
 
-Google login
+### 2️⃣ Add Habit (Private)
 
-Password rules:
+Includes fields like:
 
-At least 6 characters
+* Title, Description, Category
+* Reminder Time
+* Image URL / Upload
+* User Name (read only)
+* User Email (read only)
 
-One uppercase, one lowercase
+### 3️⃣ My Habits (Private)
 
-Error & success → Toast / SweetAlert (No default alert)
-
-Logged-in user should NOT redirect to login on refresh
-
-🔹 2. Home Page
-
-Contains:
-
-Hero Banner (3-slide carousel)
-
-Featured Habits (latest 6 public habits → sorted by createdAt)
-
-Why Build Habits? (4 cards)
-
-Two extra meaningful sections
-
-Framer Motion Animations everywhere
-
-🔹 3. Add Habit (Private Route)
-
-Form fields:
-
-Title
-
-Description
-
-Category (Morning / Evening / Work / Study / Fitness)
-
-Reminder Time
-
-Image URL / Upload (ImgBB optional)
-
-User Name (read only)
-
-User Email (read only)
-
-After clicking Add → save to MongoDB + show success toast.
-
-🔹 4. My Habits (Private Route)
-
-Table view with:
-
-Title
-
-Category
-
-Current Streak
-
-Created Date
-
-Update | Delete | Mark Complete
-
-Update Habit
-
-All fields editable
-
-Pre-filled form
-
-Success toast on update
-
-Delete Habit
-
-Confirm popup
-
-Remove instantly from DB + UI updates
-
-🔹 5. Browse Public Habits
-
-All public habits
-
-Cards/Grid view
-
-Search by title
-
-Filter by category
-
-Combined search + filter
-
-“View Details” button
-
-🔹 6. Habit Details (Private Route)
+* View habits in table format
+* Update habit
+* Delete habit
+* Mark daily completion
+
+### 4️⃣ Browse Public Habits
+
+* All public habits
+* Search by title
+* Filter by category
+* Details page for each habit
+
+### 5️⃣ Habit Details (Private)
 
 Shows:
 
-Title, Description, Image
+* Description
+* Image
+* Progress bar
+* Streak badge
+* Creator info
+* Mark Complete button
 
-Progress bar (% completion last 30 days)
+### ✔ Mark Complete
 
-Streak badge
+* Push today's date to DB
+* Prevent duplicate same‑day entries
+* Auto‑update streak
 
-Creator info
+---
 
-Mark Complete button
+## 📊 Streak Calculation Logic
 
-✔️ Mark Complete Feature:
+* Stores all completed dates
+* Compares consecutive days
+* Increases streak if matches pattern
+* Prevents duplicate entries
 
-Adds today’s date using MongoDB $push
+---
 
-Prevents duplicate same-day entry
+## 📦 Dependencies
 
-Updates streak in real-time
+### **Frontend**
 
-🔧 Backend API (Express + MongoDB)
-POST /habit — Create Habit
-GET /habits — Get All Public Habits
-GET /user-habits/:email — Get User Habits
-GET /habit/:id — Habit Details
-PUT /habit/:id — Update Habit
-DELETE /habit/:id — Delete Habit
-PUT /habit/:id/complete — Mark Habit Complete
-🧪 Extra Packages Implemented
+* react
+* react-router-dom
+* firebase
+* axios
+* framer-motion
+* sweetalert2 / react-toastify
+* react-icons
 
-✔ Framer Motion
-✔ React Simple Typewriter (optional hero text)
-✔ React Tooltip
-✔ Lottie Animations (optional)
+### **Backend**
 
-💾 Installation Guide
-🔹 Clone Client
+* express
+* mongodb
+* cors
+* dotenv
+* jsonwebtoken (optional)
+
+---
+
+## 💾 Run Locally
+
+### **Client Setup**
+
+```bash
 git clone YOUR_CLIENT_REPO_URL
 cd client
 npm install
 npm run dev
+```
 
-🔹 Clone Server
+### **Server Setup**
+
+```bash
 git clone YOUR_SERVER_REPO_URL
 cd server
 npm install
 nodemon index.js
+```
 
-🌐 Deployment
-Frontend Hosting
+### **Environment Variables**
 
-Netlify / Surge / Firebase
+Create `.env` in server:
 
-Backend Hosting
+```
+MONGO_URI=your_mongodb_url
+JWT_SECRET=your_secret (optional)
+```
 
-Vercel (index.js configured for serverless)
+---
 
-Important:
+## 🌐 Deployment
 
-Add domain to Firebase Authorized Domains
+* **Frontend:** Netlify / Firebase / Surge
+* **Backend:** Vercel
 
-Fix SPA reload issue
 
-MongoDB connection must use environment variables
 
-📊 Streak Calculation Logic
-
-Every time user marks habit complete → push date to completionHistory[]
-
-Compare consecutive days
-
-Streak increases when days match pattern
-
-Duplicate dates prevented
-
-❗ 404 Page
-
-Custom Not Found Page
-
-No navbar/footer
-
-🔁 Loading State
-
-Global loading spinner
-
-Shown on every fetch
-
-📱 UI/UX Guidelines Followed
-
-Same button styles across website
-
-Same heading styles
-
-Proper spacing & grid layout
-
-Same logo style in navbar & footer
-
-All cards equal height
-
-Use X instead of Twitter bird
-
-Fully responsive for all devices
-
-📝 Commit Requirements
-
-✔ 15+ meaningful client commits
-✔ 8+ meaningful server commits
